@@ -13,7 +13,8 @@ using namespace std;
         int mid = start + (end - start) / 2;
 
        
-        if (mid % 2 == 1) {
+        if (mid % 2 == 1) {       //solved using mid is even or odd
+                                
             mid--;
         }
 
