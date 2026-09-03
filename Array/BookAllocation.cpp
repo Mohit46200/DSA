@@ -2,39 +2,55 @@
 #include <vector>
 #include <algorithm>
 using namespace std;
- 
 
-vector<int> findPages(vector<int> &arr, int k) {
-        vector<int> totalpages;
+ bool isvalid(vector<int> &arr,int k , int mid){
+        int st = 1;
+        int pages = 0;
+        for(int i=0;i<arr.size();i++){
+            if(arr[i]>mid){
+                return false;
+            }
+            if(pages+arr[i]<=mid){
+                pages = pages+arr[i];
+            }else{
+                st = st+1;
+                pages = arr[i];
+            }
+        }
+        if(st<=k){
+            // cout<<"true"<<"\n";
+            return true;
+        }
+        // cout<<"false"<<"\n";
+        return false;
+    }
+    int findPages(vector<int> &arr, int k) {
+        if(k>arr.size()){
+            return -1;
+        }
+        int ans = 0;
+        int start = 0;
         int sum = 0;
-        // if(arr.size()<k){
-        //     return -1;
-        // }
-        for(int j=0;j<arr.size();j++){
-            sum = 0;
-            for(int i=j;i<j+(arr.size()-(k-1));i++){
-                sum  = sum + arr[i];
-                totalpages.push_back(sum);
-            }
-            
-            if(j == k-1){
-                break;
+        for(int i=0;i<arr.size();i++){
+            sum = sum + arr[i];
+        }
+        int end = sum;
+        int mid;
+        while(start<=end){
+            mid = (start+end)/2;
+            // cout<<mid<<"\n";
+            if(isvalid(arr,k,mid)){
+                ans=mid;
+                end = mid-1;
+            }else{
+                start = mid+1;
             }
         }
-        int min = totalpages[0];
-        for(int i=0;i<totalpages.size();i++){
-            if(totalpages[i]<min){
-                min = totalpages[i];
-            }
-        }
-        return totalpages;
+        return ans;
     }
 
 int main() {
-    vector<int> arr = {15,10,19,10,5,18,7};
-    int k = 5;
-    vector<int> ans = findPages(arr,k);
-    for(int i = 0;i<ans.size();i++){
-        cout<<ans[i]<<"\t";
-    }
+    vector<int> arr = {13 ,31, 37, 45, 46, 54, 55, 63, 73, 84, 85};
+    int k = 9;
+    cout<<findPages(arr,k)<<"\n";
 }
