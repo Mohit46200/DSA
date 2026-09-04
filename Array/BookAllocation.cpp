@@ -3,7 +3,8 @@
 #include <algorithm>
 using namespace std;
 
- bool isvalid(vector<int> &arr,int k , int mid){
+ bool isvalid(vector<int> &arr,int k , int mid){          //same login for painter problem 
+                                                         // bus usmai (st = max) of arr. Why? A painter must paint an entire board, so the answer can never be smaller than the largest board.
         int st = 1;
         int pages = 0;
         for(int i=0;i<arr.size();i++){
